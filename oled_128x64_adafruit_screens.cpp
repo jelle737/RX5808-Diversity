@@ -142,28 +142,15 @@ void screens::drawSmallTitleBox(const char *title) {
 }
 
 //JELLE OK
-void screens::mainMenu(uint8_t menu_id) { //Jelle: Main menu screen
+void screens::mainMenu(uint8_t menu_id,char* menu_items[],uint8_t menu_size) { //Jelle: Main menu screen
     reset(); // start from fresh screen.
     drawSmallTitleBox(PSTR2("MODE SELECTION"));
-    display.fillRect(0, 9*menu_id+9, display.width(), 9,WHITE);
-    display.setTextColor(menu_id == 0 ? BLACK : WHITE);
-    display.setCursor(5,9*0+10);
-    display.print(PSTR2("MANUAL MODE"));
-    display.setTextColor(menu_id == 1 ? BLACK : WHITE);
-    display.setCursor(5,9*1+10);
-    display.print(PSTR2("SPECTATOR MODE"));
-    display.setTextColor(menu_id == 2 ? BLACK : WHITE);
-    display.setCursor(5,9*2+10);
-    display.print(PSTR2("BAND SCANNER MODE"));
-    display.setTextColor(menu_id == 3 ? BLACK : WHITE);
-    display.setCursor(5,9*3+10);
-    display.print(PSTR2("ANTENNA COMPARE MODE"));
-    display.setTextColor(menu_id == 4 ? BLACK : WHITE);
-    display.setCursor(5,9*4+10);
-    display.print(PSTR2("DIVERSITY MENU"));
-    display.setTextColor(menu_id == 5 ? BLACK : WHITE);
-    display.setCursor(5,9*5+10);
-    display.print(PSTR2("SETUP MENU"));
+    display.fillRect(0, 9*2+9, display.width(), 9,WHITE);
+    for(int i=0; i<6; i++){
+        display.setTextColor(i == 2 ? BLACK : WHITE);  
+        display.setCursor(5,9*i+10);
+        display.print(menu_items[(menu_id+menu_size-2+i)%menu_size]);    
+    }
     display.display();
 }
 

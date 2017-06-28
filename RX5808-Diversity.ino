@@ -141,6 +141,19 @@ int rssi=0;
 int rssiA=0;
 int rssiB=0;
 
+
+char m1[] = "MANUAL MODE";
+char m2[] = "FAVORITES MODE";
+char m3[] = "SPECTATOR MODE";
+char m4[] = "BAND SCANNER MODE";
+char m5[] = "ANTENNA COMPARE MODE";
+char m6[] = "DIVERSITY MENU";
+char m7[] = "SETUP MENU";
+char m8[] = "CALIBRATE RSSI";
+char* m0[] = {m1,m2,m3,m4,m5,m6,m7,m8};
+uint8_t m0size = 8;
+
+
 char call_sign[10];
 bool settings_beeps = true;
 bool settings_orderby_channel = true;
@@ -290,7 +303,8 @@ void loop(){
                 state = STATE_SAVE;
                 break;
             }
-            drawScreen.mainMenu(menu_id);
+            //char call_sign[10] = 
+            drawScreen.mainMenu(menu_id, m0,m0size);//update
             delay(KEY_DEBOUNCE);
             while(--in_menu_time_out && (digitalRead(buttonMode) == HIGH) && (digitalRead(buttonUp) == HIGH) && (digitalRead(buttonDown) == HIGH)){
                 delay(100); // timeout delay // wait for next key press or time out                
@@ -306,18 +320,24 @@ void loop(){
                             state=STATE_MANUAL;
                             break;
                         case 1:
-                            state=STATE_SEEK;
+                            state=STATE_MANUAL;
                             break;
                         case 2:
-                            state=STATE_SCAN;
+                            state=STATE_SEEK;
                             break;
                         case 3:
-                            state=STATE_ANTENNA;
+                            state=STATE_SCAN;
                             break;
                         case 4:
-                            state=STATE_DIVERSITY;
+                            state=STATE_ANTENNA;
                             break;
                         case 5:
+                            state=STATE_DIVERSITY;
+                            break;
+                        case 6:
+                            state=STATE_SETUP_MENU;
+                            break;
+                        case 7:
                             state=STATE_SETUP_MENU;
                             break;
                     }
@@ -327,9 +347,9 @@ void loop(){
                 }
             }else{
                 if(digitalRead(buttonUp) == LOW) {
-                	menu_id = (menu_id+5)%6;
+                	menu_id = (menu_id+m0size-1)%m0size;
                 }else if(digitalRead(buttonDown) == LOW) {
-                	menu_id = (menu_id+1)%6;
+                	menu_id = (menu_id+1)%m0size;
                 }
                 in_menu_time_out=50;
 			}
@@ -752,7 +772,7 @@ void loop(){
         in_menu_time_out=50;
         int editing = -1;
         do{
-            drawScreen.rssiMenu(rssi_min_a, rssi_max_a, rssi_min_b, rssi_max_b, menu_id, editing);
+            drawScreen.rssiMenu(sizeof(m0), rssi_max_a, rssi_min_b, rssi_max_b, menu_id, editing);
             delay(KEY_DEBOUNCE);
             while(--in_menu_time_out && (digitalRead(buttonMode) == HIGH) && (digitalRead(buttonUp) == HIGH) && (digitalRead(buttonDown) == HIGH)){
                 delay(100); // timeout delay

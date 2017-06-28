@@ -56,7 +56,7 @@ class screens
         void flip();
 
         // MAIN MENU
-        void mainMenu(uint8_t menu_id);
+        void mainMenu(uint8_t menu_id, char* menu_items[],uint8_t menu_size);
 
         // SEEK & MANUAL MODE
         void seekMode(uint8_t state); // seek and manual mode
