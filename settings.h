@@ -109,17 +109,20 @@ SOFTWARE.
 
 
 #define STATE_MANUAL 0
-#define STATE_SEEK 1
-#define STATE_SCAN 2
-#define STATE_ANTENNA 3
-#define STATE_DIVERSITY 4
-#define STATE_SETUP_MENU 5
-#define STATE_SEEK_FOUND 10
-#define STATE_SAVE 6
-#define STATE_RSSI_SETUP 7
-#define STATE_SCREEN_SAVER 8
-#define STATE_RSSI 9
-#define STATE_ANTENNA_SAVER 11
+#define STATE_FAVORITES 1
+#define STATE_SEEK 2
+#define STATE_SCAN 3
+#define STATE_ANTENNA 4
+#define STATE_FREQUENCY 5
+#define STATE_SEEK_FOUND 6
+#define STATE_SCREEN_SAVER 7
+#define STATE_RSSI_SETUP 8
+#define STATE_ANTENNA_SAVER 9
+
+#define STATE_DIVERSITY 10
+#define STATE_SETUP_MENU 11
+#define STATE_RSSI_MENU 12
+#define STATE_QUICK_MENU 13
 
 
 
@@ -131,7 +134,7 @@ SOFTWARE.
 
 #define CHANNEL_BAND_SIZE 8
 #define CHANNEL_MIN_INDEX 0
-#define CHANNEL_MAX_INDEX 39
+#define CHANNEL_MAX_INDEX 47
 
 #ifdef rx5808
     // rx5808 module need >20ms to tune.
@@ -144,7 +147,7 @@ SOFTWARE.
     #define MIN_TUNE_TIME 35
 #endif
 
-#define CHANNEL_MAX 39
+#define CHANNEL_MAX 47
 #define CHANNEL_MIN 0
 
 #define EEPROM_ADR_STATE 0
@@ -165,6 +168,12 @@ SOFTWARE.
 // When RSSI is not plugged in the min value is 0
 #define isDiversity() (analogRead(rssiPinB) >= 5)
 
+#define EEPROM_ADR_FAVS 40
+#define EEPROM_ADR_FAVS_B 41
+#define EEPROM_ADR_FAVS_E 42
+#define EEPROM_ADR_FAVS_F 43
+#define EEPROM_ADR_FAVS_R 44
+#define EEPROM_ADR_FAVS_L 45
 
 #define EEPROM_ADR_BEEP 11
 #define EEPROM_ADR_ORDERBY 12
