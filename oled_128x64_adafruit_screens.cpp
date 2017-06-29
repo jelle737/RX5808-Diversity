@@ -63,7 +63,7 @@ screens::screens() {
 //    last_rssi = 0;
 }
 
-char screens::begin(const char *call_sign) {
+char screens::begin() {
     // Set the address of your OLED Display.
     // 128x64 ONLY!!
 #ifdef SH1106
@@ -95,25 +95,11 @@ char screens::begin(const char *call_sign) {
     display.setCursor(display.width()-6*3,8*1+4);
     display.print(PSTR2("OK"));
     display.setCursor(0,8*2+4);
-
-    //display.display();
-//#ifdef USE_DIVERSITY
     display.print(PSTR2("Diversity:"));
-    //display.display();
-    //delay(250);
     display.setCursor(display.width()-6*9,8*2+4);
-    //if(isDiversity()) {
-        display.print(PSTR2(" ENABLED"));
-    //}
-    //else {
-    //    display.print(PSTR2("DISABLED"));
-    //}
-//#endif
-    display.setCursor(((display.width() - (strlen(call_sign)*12)) / 2),8*4+4);
-    display.setTextSize(2);
-    display.print(call_sign);
+    display.print(PSTR2(" ENABLED"));
     display.display();
-    delay(1250);
+    delay(250);
     return 0; // no errors
 }
 
@@ -130,7 +116,7 @@ void screens::flip() {
 
 //JELLE OK
 void screens::drawSmallTitleBox(const char *title) {
-    display.drawRect(0, 0, display.width(), display.height(),WHITE);
+    //display.drawRect(0, 0, display.width(), display.height(),WHITE);
     display.fillRect(0, 0, display.width(), 9,WHITE);
 
     display.setTextSize(1);
@@ -141,29 +127,65 @@ void screens::drawSmallTitleBox(const char *title) {
     display.setTextColor(WHITE);
 }
 
-//JELLE OK
-void screens::mainMenu(uint8_t menu_id) { //Jelle: Main menu screen
+
+void screens::modeMenu(uint8_t menu_id) { //Jelle: Main menu screen
+//    char m1[] = "MANUAL MODE";
+//    char m2[] = "FAVORITES MODE";
+//    char m3[] = "SPECTATOR MODE";
+//    char m4[] = "BAND SCANNER MODE";
+//    char m5[] = "ANTENNA COMPARE MODE";
+    //char m6[] = "CUSTOM FREQUENCY";
+//    char m6[] = "DIVERSITY MENU";
+//    char m7[] = "SETUP MENU";
+//    char m8[] = "CALIBRATE RSSI";
+//    char* m0[] = {PSTR2("MANUAL MODE"),m2,PSTR2("SPECTATOR MODE"),m4,PSTR2("ANTENNA COMPARE MODE")};
     reset(); // start from fresh screen.
     drawSmallTitleBox(PSTR2("MODE SELECTION"));
-    display.fillRect(0, 9*menu_id+9, display.width(), 9,WHITE);
-    display.setTextColor(menu_id == 0 ? BLACK : WHITE);
-    display.setCursor(5,9*0+10);
+    display.fillRect(0, 11*1+9, display.width(), 11,WHITE);
+    display.setTextColor(menu_id==0 ? BLACK : WHITE);  
+    display.setCursor(5,(5-menu_id+1)%5*11+11);
     display.print(PSTR2("MANUAL MODE"));
-    display.setTextColor(menu_id == 1 ? BLACK : WHITE);
-    display.setCursor(5,9*1+10);
+    display.setTextColor(menu_id==1 ? BLACK : WHITE);  
+    display.setCursor(5,(5-menu_id+2)%5*11+11);
+    display.print(PSTR2("FAVORITES MODE"));
+    display.setTextColor(menu_id==2 ? BLACK : WHITE);  
+    display.setCursor(5,(5-menu_id+3)%5*11+11);
     display.print(PSTR2("SPECTATOR MODE"));
-    display.setTextColor(menu_id == 2 ? BLACK : WHITE);
-    display.setCursor(5,9*2+10);
+    display.setTextColor(menu_id==3 ? BLACK : WHITE);  
+    display.setCursor(5,(5-menu_id+4)%5*11+11);
     display.print(PSTR2("BAND SCANNER MODE"));
-    display.setTextColor(menu_id == 3 ? BLACK : WHITE);
-    display.setCursor(5,9*3+10);
+    display.setTextColor(menu_id==4 ? BLACK : WHITE);  
+    display.setCursor(5,(5-menu_id+5)%5*11+11);
     display.print(PSTR2("ANTENNA COMPARE MODE"));
-    display.setTextColor(menu_id == 4 ? BLACK : WHITE);
-    display.setCursor(5,9*4+10);
-    display.print(PSTR2("DIVERSITY MENU"));
-    display.setTextColor(menu_id == 5 ? BLACK : WHITE);
-    display.setCursor(5,9*5+10);
-    display.print(PSTR2("SETUP MENU"));
+    display.display();
+}
+
+void screens::quickMenu(uint8_t menu_id) { //Jelle: Main menu screen
+//    char p1[] = "FASTBOOT HERE";
+//    char p2[] = "ADD TO FAVORITE";
+//    char p3[] = "REMOVE FROM FAVORITE";
+//    char p4[] = "DIVERSITY MENU";
+//    char p5[] = "SETTINGS MENU";
+//    char* p0[] = {p1,p2,p3,p4,p5};
+//    char* p0[] = {PSTR2("FASTBOOT HERE"),PSTR2("ADD TO FAVORITE"),PSTR2("REMOVE FROM FAVORITE"),PSTR2("DIVERSITY MODE"),PSTR2("SETTINGS MENU")};
+    reset(); // start from fresh screen.
+    drawSmallTitleBox(PSTR2("QUICK MENU"));
+    display.fillRect(0, 11*1+9, display.width(), 11,WHITE);
+    display.setTextColor(menu_id==0 ? BLACK : WHITE);  
+    display.setCursor(5,(5-menu_id+1)%5*11+11);
+    display.print(PSTR2("FASTBOOT HERE"));
+    display.setTextColor(menu_id==1 ? BLACK : WHITE);  
+    display.setCursor(5,(5-menu_id+2)%5*11+11);
+    display.print(PSTR2("ADD TO FAVORITE"));
+    display.setTextColor(menu_id==2 ? BLACK : WHITE);  
+    display.setCursor(5,(5-menu_id+3)%5*11+11);
+    display.print(PSTR2("REMOVE FROM FAVORITE"));
+    display.setTextColor(menu_id==3 ? BLACK : WHITE);  
+    display.setCursor(5,(5-menu_id+4)%5*11+11);
+    display.print(PSTR2("DIVERSITY MODE"));
+    display.setTextColor(menu_id==4 ? BLACK : WHITE);  
+    display.setCursor(5,(5-menu_id+5)%5*11+11);
+    display.print(PSTR2("SETTINGS MENU"));
     display.display();
 }
 
@@ -177,71 +199,52 @@ void screens::seekMode(uint8_t state) {
         drawSmallTitleBox(PSTR2("AUTO SEEK"));
     }else if(state == STATE_ANTENNA){
         drawSmallTitleBox(PSTR2("ANTENNA COMPARE"));
+    }else if(state == STATE_FAVORITES){
+        drawSmallTitleBox(PSTR2("FAVORITE"));
     }
-    display.setTextColor(WHITE);
-    display.drawLine(0, 18, display.width(), 18, WHITE);
-    display.drawLine(0, 30, display.width(), 30, WHITE);
-    display.setCursor(5,10);
-    display.drawLine(97,9,97,18,WHITE);
-    display.print(PSTR2("BAND:"));
-    for(uint16_t i=0;i<8;i++) {
-        display.setCursor(15*i+8,21);
-        display.print((char) (i+'1'));
-    }
-    display.drawLine(0, 33, display.width(), 33, WHITE);
-    display.drawLine(0, display.height()-11, display.width(), display.height()-11, WHITE);
-    display.setCursor(2,display.height()-9);
-    display.print(PSTR2("5645"));
-    display.setCursor(55,display.height()-9);
-    display.print(PSTR2("5800"));
-    display.setCursor(display.width()-25,display.height()-9);
-    display.print(PSTR2("5945"));
     display.display();
 }
 
 //char scan_position = 3;
 
 //JELLE OK
-void screens::updateSeekMode(uint8_t state, uint8_t channelIndex, uint8_t channel, uint8_t rssi, uint16_t channelFrequency, uint8_t rssi_seek_threshold, bool locked) {
+void screens::updateSeekMode(uint8_t state, uint8_t channelIndex, uint8_t channel, uint8_t rssi, uint16_t channelFrequency, uint8_t rssi_seek_threshold, bool locked, bool *favor) {
     if(channel != last_channel) // only updated on changes
     {
-        display.setTextColor(WHITE,BLACK);
-        display.setCursor(36,10);
-        // show current used channel of bank
-        if(channelIndex > 31){
-            display.print(PSTR2("C/Race   "));
-        }else if(channelIndex > 23){
-            display.print(PSTR2("F/Airwave"));
-        }else if (channelIndex > 15){
-            display.print(PSTR2("E        "));
-        }else if (channelIndex > 7){
-            display.print(PSTR2("B        "));
-        }else{
-            display.print(PSTR2("A        "));
-        }
-
+        char m1[] = "ABEFRL";
+        uint8_t active_band = channelIndex/CHANNEL_BAND_SIZE;
         uint8_t active_channel = channelIndex%CHANNEL_BAND_SIZE; // get channel inside band
+        display.drawLine(0, 27, display.width(), 27, BLACK);
         for(int i=0;i<8;i++) {
-            display.fillRect(15*i+3,19,15,11,i==active_channel? WHITE:BLACK);
+            display.fillRect(15*i+3,18,15,9,i==active_channel? WHITE:BLACK);
             display.setTextColor(i==active_channel? BLACK:WHITE);
-            display.setCursor(15*i+8,21);
+            display.setCursor(15*i+8,19);
             display.print((char) (i+'1'));
+            if(favor[active_band*8+i]){
+                //favorite markings here
+                display.drawRect(15*i+3,17,15,11,WHITE);
+            }
         }
-
+        display.drawLine(0, 17, display.width(), 17, BLACK);
+        for(int i=0; i<6; i++){
+            display.fillRect(15*i+3,9,15,9,i==active_band? WHITE:BLACK);
+            display.setTextColor(i==active_band? BLACK:WHITE);
+            display.setCursor(15*i+8,10);
+            display.print(m1[i]);
+        }
         // show frequence
         display.setCursor(101,10);
         display.setTextColor(WHITE,BLACK);
         display.print(channelFrequency);
-        display.drawLine(4, display.height()-12, display.width()-5, display.height()-12, BLACK);
+        display.drawLine(0, display.height()-1, display.width(), display.height()-1, BLACK); //clear the position holding indicator
     }
     // show signal strength
-    uint8_t rssi_scaled=map(rssi, 1, 100, 1, display.width()-3);
-    display.fillRect(1, 31, display.width()-2, 2, BLACK);
-    display.fillRect(1, 31, rssi_scaled, 2, WHITE);
-    rssi_scaled=map(rssi, 1, 100, 1, 17);
-    display.fillRect((channel*3)+4,display.height()-12-17,3,17,BLACK);
-    display.fillRect((channel*3)+4,display.height()-12-rssi_scaled,3,rssi_scaled+1,WHITE);
-    
+    uint8_t rssi_scaled=map(rssi, 1, 100, 1, display.width());
+    display.fillRect(0, 29, display.width(), 3, BLACK);
+    display.fillRect(0, 29, rssi_scaled, 3, WHITE);
+    rssi_scaled=map(rssi, 1, 100, 1, 30);
+    display.fillRect((channel*128/48),display.height()-30,((channel+1)*128/48-channel*128/48),30,BLACK);
+    display.fillRect((channel*128/48),display.height()-1-rssi_scaled,((channel+1)*128/48-channel*128/48),rssi_scaled+1,WHITE);
     // handling for seek mode after screen and RSSI has been fully processed
     if(state == STATE_SEEK) //
     { // SEEK MODE
@@ -258,7 +261,6 @@ void screens::updateSeekMode(uint8_t state, uint8_t channelIndex, uint8_t channe
             display.print(PSTR2("AUTO SEEK"));
         }
     }
-
     last_channel = channel;
     display.display();
 }
@@ -278,26 +280,21 @@ void screens::bandScanMode(uint8_t state) {
         display.print(PSTR2("Min:     Max:"));
     }
     display.drawLine(0, 18, display.width(), 18, WHITE);
-
-    display.drawLine(0, display.height()-11, display.width(), display.height()-11, WHITE);
-    display.setCursor(2,display.height()-9);
-    display.print(PSTR2("5645"));
-    display.setCursor(55,display.height()-9);
-    display.print(PSTR2("5800"));
-    display.setCursor(display.width()-25,display.height()-9);
-    display.print(PSTR2("5945"));
     display.display();
 }
 
 //JELLE OK
-void screens::updateBandScanMode(bool in_setup, uint8_t channel, uint8_t rssi, uint8_t channelName, uint16_t channelFrequency, uint16_t rssi_setup_min_a, uint16_t rssi_setup_max_a) {
-    uint8_t rssi_scaled=map(rssi, 1, 100, 1, 32);
-    uint16_t hight = (display.height()-12-rssi_scaled);
+void screens::updateBandScanMode(bool in_setup, uint8_t channel, uint8_t rssi, uint8_t channelIndex, uint16_t channelFrequency, uint16_t rssi_setup_min_a, uint16_t rssi_setup_max_a) {
+    uint8_t rssi_scaled=map(rssi, 1, 100, 1, 44);
+    uint16_t hight = (display.height()-rssi_scaled);
     if(channel != last_channel) // only updated on changes
     {
-        display.fillRect((channel*3)+4,display.height()-12-32,3,32,BLACK);
-        display.drawLine(4, display.height()-12, display.width()-5, display.height()-12, BLACK);
-        display.fillRect((channel*3)+4,hight,3,rssi_scaled+1,WHITE);
+       // display.fillRect((channel*3)+4,display.height()-12-32,3,32,BLACK);
+        display.drawLine(0, display.height()-1, display.width(), display.height()-1, BLACK);
+       // display.fillRect((channel*3)+4,hight,3,rssi_scaled+1,WHITE);
+    display.fillRect((channel*128/48),display.height()-44,((channel+1)*128/48-channel*128/48),44,BLACK);
+    display.fillRect((channel*128/48),display.height()-rssi_scaled,((channel+1)*128/48-channel*128/48),rssi_scaled+1,WHITE);
+ 
     }
     if(!in_setup) {
         if (rssi > RSSI_SEEK_TRESHOLD) {
@@ -305,7 +302,9 @@ void screens::updateBandScanMode(bool in_setup, uint8_t channel, uint8_t rssi, u
                 best_rssi = rssi;
                 display.setTextColor(WHITE,BLACK);
                 display.setCursor(36,10);
-                display.print(channelName, HEX);
+                char m1[] = "ABEFRL";
+                display.print(m1[channelIndex/CHANNEL_BAND_SIZE]);
+                display.print((char) (channelIndex%CHANNEL_BAND_SIZE+'1'));
                 display.setCursor(52,10);
                 display.print(channelFrequency);
             }
@@ -328,15 +327,15 @@ void screens::updateBandScanMode(bool in_setup, uint8_t channel, uint8_t rssi, u
 
 
 //JELLE OK
-void screens::screenSaver(uint8_t diversity_mode, uint8_t channelName, uint16_t channelFrequency, const char *call_sign) {
+void screens::screenSaver(uint8_t diversity_mode, uint8_t channelIndex, uint16_t channelFrequency) {
     reset();
     display.setTextSize(6);
     display.setTextColor(WHITE);
     display.setCursor(0,0);
-    display.print(channelName, HEX);
-    display.setTextSize(1);
-    display.setCursor(70,0);
-    display.print(call_sign);
+    char m1[] = "ABEFRL";
+    display.print(m1[channelIndex/CHANNEL_BAND_SIZE]);
+    int number = channelIndex%CHANNEL_BAND_SIZE;
+    display.print((char) (number+'1'));
     display.setTextSize(2);
     display.setCursor(70,28);
     display.setTextColor(WHITE);
@@ -366,20 +365,19 @@ void screens::screenSaver(uint8_t diversity_mode, uint8_t channelName, uint16_t 
 
 
 //JELLE OK
-void screens::screenAntenna(uint8_t diversity_mode, uint8_t channelName, uint16_t channelFrequency, const char *call_sign) {
+void screens::screenAntenna(uint8_t diversity_mode, uint8_t channelIndex, uint16_t channelFrequency) {
     reset();
     display.setTextSize(1);
     display.setTextColor(WHITE);
     display.setCursor(0,0);
-    display.print(channelName, HEX);
+    char m1[] = "ABEFRL";
+    display.print(m1[channelIndex/CHANNEL_BAND_SIZE]);
+    int number = channelIndex%CHANNEL_BAND_SIZE;
+    display.print((char) (number+'1'));
     //display.setTextSize(1);
     display.setCursor(6*3,0);
     display.print(channelFrequency);
     display.setCursor(6*14,0);
-    display.print(call_sign);
-//    display.setTextSize(1);
-//#ifdef USE_DIVERSITY
-//    if(isDiversity()) {
     display.setCursor(6*8,0);
     switch(diversity_mode) {
         case useReceiverAuto:
@@ -505,76 +503,67 @@ void screens::diversity(uint8_t diversity_mode) {
     reset();
     drawSmallTitleBox(PSTR2("DIVERSITY"));
 
-    //selected
-    display.fillRect(0, 9*diversity_mode+9, display.width(), 9, WHITE);
-
-    display.setTextColor(diversity_mode == useReceiverAuto ? BLACK : WHITE);
-    display.setCursor(5,9*0+10);
+//    char n1[] = "AUTO";
+//    char n2[] = "USE RECEIVER A";
+//    char n3[] = "USE RECEIVER B";
+//    char* n0[] = {n1,n2,n3};
+//    char* n0[] = {PSTR2("AUTO"),PSTR2("USA RECEIVER A"),PSTR2("USE RECEIVER B")};
+    display.fillRect(0, 11*diversity_mode+9, display.width(), 11,WHITE);
+    //for(int i=0; i<3; i++){
+    display.setTextColor(0 == diversity_mode ? BLACK : WHITE);
+    display.setCursor(5,11*0+11);
     display.print(PSTR2("AUTO"));
-
-    display.setTextColor(diversity_mode == useReceiverA ? BLACK : WHITE);
-    display.setCursor(5,9*1+10);
-    display.print(PSTR2("USE RECEIVER A"));
-    display.setTextColor(diversity_mode == useReceiverB ? BLACK : WHITE);
-    display.setCursor(5,9*2+10);
-    display.print(PSTR2("USE RECEIVER B"));
-
+    display.setTextColor(1 == diversity_mode ? BLACK : WHITE);
+    display.setCursor(5,11*1+11);
+    display.print(PSTR2("USA RECEIVER A"));
+    display.setTextColor(2 == diversity_mode ? BLACK : WHITE);
+    display.setCursor(5,11*2+11);
+    display.print(PSTR2("USA RECEIVER B"));
+    
+    //}
     // RSSI Strength
-    display.setTextColor(WHITE);
-    display.drawRect(0, display.height()-21, display.width(), 11, WHITE);
-    display.setCursor(5,display.height()-19);
-    display.print("A:");
-    display.setCursor(5,display.height()-9);
-    display.print("B:");
+    display.setTextColor(BLACK,WHITE);
+    display.fillRect(0, 45, 7, 9, WHITE);
+    display.setCursor(1, 46);
+    display.print("A");
+    display.fillRect(0, 55, 7, 9, WHITE);
+    display.setCursor(1, 56);
+    display.print("B");
     display.display();
 }
 
 //JELLE OK
 void screens::updateDiversity(char active_receiver, uint8_t rssiA, uint8_t rssiB){
-//    #define RSSI_BAR_SIZE 108
-    uint8_t rssi_scaled=map(rssiA, 1, 100, 1, 108);
-
-    display.fillRect(18, display.height()-19, 108, 7, BLACK);
-    display.fillRect(18, display.height()-9, 108, 7, BLACK);
-    if(active_receiver==useReceiverA){
-        display.fillRect(18, display.height()-19, rssi_scaled, 7, WHITE);
-    }else{
-        display.drawRect(18, display.height()-19, rssi_scaled, 7, WHITE);
-    }
-
-    // read rssi B
-    rssi_scaled=map(rssiB, 1, 100, 1, 108);
-    if(active_receiver==useReceiverB){
-        display.fillRect(18, display.height()-9, rssi_scaled, 7, WHITE);
-    }else{
-        display.drawRect(18, display.height()-9, rssi_scaled, 7, WHITE);
-    }
-    display.display();
+    updateScreenSaver(active_receiver, rssiA, rssiB);
 }
 
 
 
-//void screens::setupMenu(){
-//}
-//JELLE OK
-void screens::SetupMenu(uint8_t menu_id, bool settings_beeps, bool settings_orderby_channel, const char *call_sign, char editing){
-    reset();
-    drawSmallTitleBox(PSTR2("SETUP MENU"));
-    //selected
-    display.fillRect(0, 9*menu_id+9, display.width(), 9, WHITE);
 
-    display.setTextColor(menu_id == 0 ? BLACK : WHITE);
-    display.setCursor(5,9*0+10);
+//JELLE OK
+void screens::setupMenu(uint8_t menu_id, bool settings_beeps, bool settings_orderby_channel){
+//    char s1[] = "ORDER: ";
+//    char s2[] = "BEEPS: ";
+    //char s3[] = "SPEED: ";
+//    char s3[] = "RSSI MENU";
+//    char s4[] = "CALLIBRATE RSSI";
+//    char s5[] = "EXIT";
+//    char* s0[] = {s1,s2,s3,s4,s5};
+    char* s0[] = {PSTR2("ORDER: "),PSTR2("BEEPS: "),PSTR2("RSSI MENU"),PSTR2("CALLIBRATE RSSI"),PSTR2("EXIT")};
+    reset(); // start from fresh screen.
+    drawSmallTitleBox(PSTR2("SETTINGS"));
+    display.fillRect(0, 11*1+9, display.width(), 11,WHITE);
+    display.setTextColor(menu_id==0 ? BLACK : WHITE);  
+    display.setCursor(5,(5-menu_id+1)%5*11+11);
     display.print(PSTR2("ORDER: "));
     if(settings_orderby_channel) {
-        display.print(PSTR2("CHANNEL  "));
+        display.print(PSTR2("CHANNEL"));
     }
     else {
         display.print(PSTR2("FREQUENCY"));
-    }
-
-    display.setTextColor(menu_id == 1 ? BLACK : WHITE);
-    display.setCursor(5,9*1+10);
+    }  
+    display.setTextColor(menu_id==1 ? BLACK : WHITE);  
+    display.setCursor(5,(5-menu_id+2)%5*11+11);
     display.print(PSTR2("BEEPS: "));
     if(settings_beeps) {
         display.print(PSTR2("ON "));
@@ -582,134 +571,79 @@ void screens::SetupMenu(uint8_t menu_id, bool settings_beeps, bool settings_orde
     else {
         display.print(PSTR2("OFF"));
     }
-
-
-    display.setTextColor(menu_id == 2 ? BLACK : WHITE);
-    display.setCursor(5,9*2+10);
-    display.print(PSTR2("SIGN : "));
-    if(editing>=0) {
-        display.fillRect(6*6+5, 9*2+10, display.width()-(6*6+6), 7, BLACK);
-        display.fillRect(6*7+6*(editing)+4, 9*2+10, 7, 7, WHITE); //set cursor
-        for(uint8_t i=0; i<10; i++) {
-            display.setTextColor(i == editing ? BLACK : WHITE);
-            display.print(call_sign[i]);
-        }
-    }
-    else {
-        display.print(call_sign);
-    }
-
-    display.setTextColor(menu_id == 3 ? BLACK : WHITE);
-    display.setCursor(5,9*3+10);
-    display.print(PSTR2("CALIBRATE RSSI"));
-    display.setTextColor(menu_id == 4 ? BLACK : WHITE);
-    display.setCursor(5,9*4+10);
+    display.setTextColor(menu_id==2 ? BLACK : WHITE);  
+    display.setCursor(5,(5-menu_id+3)%5*11+11);
     display.print(PSTR2("RSSI MENU"));
-    display.setTextColor(menu_id == 5 ? BLACK : WHITE);
-    display.setCursor(5,9*5+10);
-    display.print(PSTR2("SAVE SETUP & EXIT"));
+    display.setTextColor(menu_id==3 ? BLACK : WHITE);  
+    display.setCursor(5,(5-menu_id+4)%5*11+11);
+    display.print(PSTR2("CALIBRATE RSSI"));
+    display.setTextColor(menu_id==4 ? BLACK : WHITE);  
+    display.setCursor(5,(5-menu_id+5)%5*11+11);
+    display.print(PSTR2("EXIT"));
     display.display();
 }
 
-//JELLE OK
-void screens::save(uint8_t mode, uint8_t channelIndex, uint16_t channelFrequency,const char *call_sign) {
-    reset();
-    drawSmallTitleBox(PSTR2("SAVE SETTINGS"));
-    display.setTextColor(WHITE);
-    display.setCursor(5,9*0+10);
-    display.print(PSTR2("MODE:"));
-    display.setCursor(38,9*0+10);
-    switch (mode)
-    {
-        case STATE_SCAN: // Band Scanner
-            display.print(PSTR2("BAND SCANNER"));
-        break;
-        case STATE_MANUAL: // manual mode
-            display.print(PSTR2("MANUAL"));
-        break;
-        case STATE_SEEK: // seek mode
-            display.print(PSTR2("AUTO SEEK"));
-        break;
-        case STATE_ANTENNA:
-            display.print(PSTR2("ANTENNA COMP"));
-        break;
+void screens::rssiMenu(uint8_t menu_id, uint16_t rssi_min_a, uint16_t rssi_max_a, uint16_t rssi_min_b, uint16_t rssi_max_b,bool editing){
+//    char o1[] = "A MIN: ";
+//    char o2[] = "A MAX: ";
+//    char o3[] = "B MIN: ";
+//    char o4[] = "B MAX: ";
+//    char o5[] = "DISCARD CHANGES";
+//    char o6[] = "SAVE CHANGES";
+//    char* o0[] = {o1,o2,o3,o4,o5,o6};
+//    char* o0[] = {PSTR2("A MIN: "),PSTR2("A MAX: "),PSTR2("B MIN: "),PSTR2("B MAX: "),PSTR2("DISCARD CHANGES"),PSTR2("SAVE CHANGES")};
+    reset(); // start from fresh screen.
+    drawSmallTitleBox(PSTR2("RSSI MENU"));
+    display.fillRect(0, 11*1+9, display.width(), 11,WHITE);
+    if(editing){
+        display.fillRect(6*6+5, 11*1+10, display.width()-(6*6+6), 9,BLACK);
     }
-
-    display.setCursor(5,9*1+10);
-    display.print(PSTR2("BAND:"));
-    display.setCursor(38,9*1+10);
-    // print band
-    if(channelIndex > 31){
-        display.print(PSTR2("C/Race"));
-    }else if(channelIndex > 23){
-        display.print(PSTR2("F/Airwave"));
-    }else if (channelIndex > 15){
-        display.print(PSTR2("E"));
-    }else if (channelIndex > 7){
-        display.print(PSTR2("B"));
-    }else{
-        display.print(PSTR2("A"));
-    }
-
-    display.setCursor(5,9*2+10);
-    display.print(PSTR2("CHAN:"));
-    display.setCursor(38,9*2+10);
-    uint8_t active_channel = channelIndex%CHANNEL_BAND_SIZE+1; // get channel inside band
-    display.print(active_channel,DEC);
-    display.setCursor(5,9*3+10);
-    display.print(PSTR2("FREQ:     GHz"));
-    display.setCursor(38,9*3+10);
-    display.print(channelFrequency);
-
-    display.setCursor(5,9*4+10);
-    display.print(PSTR2("SIGN:"));
-    display.setCursor(38,9*4+10);
-    display.print(call_sign);
-
-    display.setCursor(((display.width()-11*6)/2),9*5+10);
-    display.print(PSTR2("-- SAVED --"));
-    display.display();
-}
-
-
-void screens::rssiMenu(uint16_t rssi_min_a, uint16_t rssi_max_a, uint16_t rssi_min_b, uint16_t rssi_max_b,uint8_t menu_id,char editing){
-    reset();
-    drawSmallTitleBox(PSTR2("RSSI MENU"));  
-    display.fillRect(0, 9*menu_id+9, display.width(), 9,WHITE);
-    if(editing>=0) {
-        display.fillRect(6*6+5, 9*menu_id+10, display.width()-(6*6+6), 7, BLACK);
-    }
-    
-    
-    
-    display.setTextColor(menu_id == 0 ? BLACK : WHITE);
-    display.setCursor(5,9*0+10);
+    display.setTextColor(menu_id==0 ? BLACK : WHITE);  
+    display.setCursor(5,(6-menu_id+1)%6*11+11);
     display.print(PSTR2("A MIN: "));
-    if(editing == 0) display.setTextColor(WHITE);
+    display.setTextColor(!editing&&menu_id==0?BLACK:WHITE);
     display.print( rssi_min_a , DEC);
-    display.setTextColor(menu_id == 1 ? BLACK : WHITE);
-    display.setCursor(5,9*1+10);
+    display.setTextColor(menu_id==1 ? BLACK : WHITE);  
+    display.setCursor(5,(6-menu_id+2)%6*11+11);
     display.print(PSTR2("A MAX: "));
-    if(editing == 1) display.setTextColor(WHITE);
+    display.setTextColor(!editing&&menu_id==1?BLACK:WHITE);
     display.print( rssi_max_a , DEC);
-    display.setTextColor(menu_id == 2 ? BLACK : WHITE);
-    display.setCursor(5,9*2+10);
+    display.setTextColor(menu_id==2 ? BLACK : WHITE);  
+    display.setCursor(5,(6-menu_id+3)%6*11+11);
     display.print(PSTR2("B MIN: "));
-    if(editing == 2) display.setTextColor(WHITE);
+    display.setTextColor(!editing&&menu_id==2?BLACK:WHITE);
     display.print( rssi_min_b , DEC);
-    display.setTextColor(menu_id == 3 ? BLACK : WHITE);
-    display.setCursor(5,9*3+10);
+    display.setTextColor(menu_id==3 ? BLACK : WHITE);  
+    display.setCursor(5,(6-menu_id+4)%6*11+11);
     display.print(PSTR2("B MAX: "));
-    if(editing == 3) display.setTextColor(WHITE);
+    display.setTextColor(!editing&&menu_id==3?BLACK:WHITE);
     display.print( rssi_max_b , DEC);
-    display.setTextColor(menu_id == 4 ? BLACK : WHITE);
-    display.setCursor(5,9*4+10);
-    display.print(PSTR2("DISCARD & RETURN"));
-    display.setTextColor(menu_id == 5 ? BLACK : WHITE);
-    display.setCursor(5,9*5+10);
-    display.print(PSTR2("SAVE RSSI & EXIT"));
+    display.setTextColor(menu_id==4 ? BLACK : WHITE);  
+    display.setCursor(5,(6-menu_id+5)%6*11+11);
+    display.print(PSTR2("DISCARD CHANGES"));
+    display.setTextColor(menu_id==5 ? BLACK : WHITE);  
+    display.setCursor(5,(6-menu_id+6)%6*11+11);
+    display.print(PSTR2("SAVE CHANGES"));
     display.display();
-}
 
+/*
+
+    for(int i=0; i<5; i++){
+        display.setTextColor(i == 1 ? BLACK : WHITE);  
+        display.setCursor(5,11*i+11);
+        display.print(o0[(menu_id+6-1+i)%6]);
+        display.setTextColor(i == 1&&!editing ? BLACK : WHITE);
+        if((menu_id+6-1+i)%6==0){
+            display.print( rssi_min_a , DEC);           
+        }else if((menu_id+6-1+i)%6==1){
+            display.print( rssi_max_a , DEC);
+        }else if((menu_id+6-1+i)%6==2){
+            display.print( rssi_min_b , DEC);
+        }else if((menu_id+6-1+i)%6==3){
+            display.print( rssi_max_b , DEC);
+        }
+    }      
+    display.display();*/
+}
 
 #endif

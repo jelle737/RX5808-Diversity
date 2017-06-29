@@ -52,29 +52,34 @@ class screens
 
     public:
         screens();
-        char begin(const char *call_sign);
+        char begin();
         void flip();
 
         // MAIN MENU
-        void mainMenu(uint8_t menu_id);
+        //void mainMenu(uint8_t menu_id, char* menu_items[],uint8_t menu_size, uint8_t menu_show);
+        void modeMenu(uint8_t menu_id);
+
+        void quickMenu(uint8_t menu_id);
+
+        void settingsMenu(uint8_t menu_id);
 
         // SEEK & MANUAL MODE
         void seekMode(uint8_t state); // seek and manual mode
-        void updateSeekMode(uint8_t state, uint8_t channelIndex, uint8_t channel, uint8_t rssi, uint16_t channelFrequency, uint8_t rssi_seek_threshold, bool locked); // seek and manual mode
+        void updateSeekMode(uint8_t state, uint8_t channelIndex, uint8_t channel, uint8_t rssi, uint16_t channelFrequency, uint8_t rssi_seek_threshold, bool locked, bool *favor); // seek and manual mode
 
         // BAND SCAN
         void bandScanMode(uint8_t state);
-        void updateBandScanMode(bool in_setup, uint8_t channel, uint8_t rssi, uint8_t channelName, uint16_t channelFrequency, uint16_t rssi_setup_min_a, uint16_t rssi_setup_max_a);
+        void updateBandScanMode(bool in_setup, uint8_t channel, uint8_t rssi, uint8_t channelIndex, uint16_t channelFrequency, uint16_t rssi_setup_min_a, uint16_t rssi_setup_max_a);
 
         // SCREEN SAVER
 
-         void screenSaver(uint8_t diversity_mode, uint8_t channelName, uint16_t channelFrequency, const char *call_sign);
+        void screenSaver(uint8_t diversity_mode, uint8_t channelIndex, uint16_t channelFrequency);
 
         void updateScreenSaver(char active_receiver, uint8_t rssiA, uint8_t rssiB); // diversity
 
         //ANTENNA
 
-        void screenAntenna(uint8_t diversity_mode, uint8_t channelName, uint16_t channelFrequency, const char *call_sign);
+        void screenAntenna(uint8_t diversity_mode, uint8_t channelIndex, uint16_t channelFrequency);
         void updateScreenAntenna(char active_receiver, uint8_t rssiA, uint8_t rssiB);
 
 
@@ -84,14 +89,18 @@ class screens
 
         // SETUP MENU
 
-        void SetupMenu(uint8_t menu_id,bool settings_beeps,bool settings_orderby_channel, const char *call_sign, char editing);
+        //void SetupMenu(uint8_t menu_id,bool settings_beeps,bool settings_orderby_channel, char editing);
 
         // SAVE
-        void save(uint8_t mode, uint8_t channelIndex, uint16_t channelFrequency, const char *call_sign);
+//        void save(uint8_t mode, uint8_t channelIndex, uint16_t channelFrequency);
+//        void save2(uint8_t menu_id);
+        void setupMenu(uint8_t menu_id, bool settings_beeps, bool settings_orderby_channel);
 
 
         // RSSI MENU
-        void rssiMenu(uint16_t rssi_min_a, uint16_t rssi_max_a, uint16_t rssi_min_b, uint16_t rssi_max_b, uint8_t menu_id, char editing);
+        //void rssiMenu(uint16_t rssi_min_a, uint16_t rssi_max_a, uint16_t rssi_min_b, uint16_t rssi_max_b, uint8_t menu_id, char editing);
+        void rssiMenu(uint8_t menu_id,  uint16_t rssi_min_a, uint16_t rssi_max_a, uint16_t rssi_min_b, uint16_t rssi_max_b,bool editing);
+
 
 };
 #endif

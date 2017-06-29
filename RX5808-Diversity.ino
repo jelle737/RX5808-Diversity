@@ -68,44 +68,72 @@ const uint16_t channelTable[] PROGMEM = {
   0x2903,    0x290C,    0x2916,    0x291F,    0x2989,    0x2992,    0x299C,    0x2A05,    // Band B
   0x2895,    0x288B,    0x2881,    0x2817,    0x2A0F,    0x2A19,    0x2A83,    0x2A8D,    // Band E
   0x2906,    0x2910,    0x291A,    0x2984,    0x298E,    0x2998,    0x2A02,    0x2A0C,    // Band F / Airwave
-  0x281D,    0x2890,    0x2902,    0x2915,    0x2987,    0x299A,    0x2A0C,    0x2A1F     // Band C / Immersion Raceband
+  0x281D,    0x2890,    0x2902,    0x2915,    0x2987,    0x299A,    0x2A0C,    0x2A1F,     // Band C / Immersion Raceband
+  0x2609, 0x261C, 0x268E, 0x2701, 0x2713, 0x2786, 0x2798, 0x280B //Low band
 };//           2890                  2915                  299A                  2A1F
 //  0x281D,    0x288F,    0x2902,    0x2914,    0x2987,    0x2999,    0x2A0C,    0x2A1E     // Band C / Immersion Raceband
+/*
+ * low band
+ * 0x2609, 0x261C, 0x268E, 0x2701, 0x2713, 0x2786, 0x2798, 0x280B 
+ * 5362, 5399, 5436, 5473, 5510, 5547, 5584, 5621
+ * 0xD1, 0xD2, 0xD3, 0xD4, 0xD5, 0xD6, 0xD7, 0xD8
+ * 40, 41, 42, 43, 44, 45, 46, 47, 19, 18, 32, 17, 33, 16, 7,  34, 8,  24, 6,  9,  25, 5,  35, 10, 26, 4,  11, 27, 3, 36, 12, 28, 2,  13, 29, 37, 1,  14, 30, 0, 15, 31, 38, 20, 21, 39, 22, 23
+
+ */
+
+
 // Channels with their Mhz Values
+
+
 const uint16_t channelFreqTable[] PROGMEM = {
   // Channel 1 - 8
   5865, 5845, 5825, 5805, 5785, 5765, 5745, 5725, // Band A
   5733, 5752, 5771, 5790, 5809, 5828, 5847, 5866, // Band B
   5705, 5685, 5665, 5645, 5885, 5905, 5925, 5945, // Band E
   5740, 5760, 5780, 5800, 5820, 5840, 5860, 5880, // Band F / Airwave
-  5658, 5695, 5732, 5769, 5806, 5843, 5880, 5917  // Band C / Immersion Raceband
+  5658, 5695, 5732, 5769, 5806, 5843, 5880, 5917,  // Band C / Immersion Raceband
+  5362, 5399, 5436, 5473, 5510, 5547, 5584, 5621  // Band L
 };
 
+// calculate the frequency to bit bang payload
+/*uint16_t freq_to_reg(uint16_t f) {
+    uint16_t tf, N, A;
+    tf = (f - 479) / 2;
+    N = tf / 32;
+    A = tf % 32;
+    return (N<<7) + A;
+}*/
+
 // do coding as simple hex value to save memory.
-const uint8_t channelNames[] PROGMEM = {
+/*const uint8_t channelNames[] PROGMEM = {
   0xA1, 0xA2, 0xA3, 0xA4, 0xA5, 0xA6, 0xA7, 0xA8, // Band A
   0xB1, 0xB2, 0xB3, 0xB4, 0xB5, 0xB6, 0xB7, 0xB8, // Band B
   0xE1, 0xE2, 0xE3, 0xE4, 0xE5, 0xE6, 0xE7, 0xE8, // Band E
   0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, // Band F / Airwave
-  0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xC8  // Band C / Immersion Raceband
-};
+  0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xC8,  // Band C / Immersion Raceband
+  0xD1, 0xD2, 0xD3, 0xD4, 0xD5, 0xD6, 0xD7, 0xD8   // Band L
+};*/
 
 // All Channels of the above List ordered by Mhz
 const uint8_t channelList[] PROGMEM = {
-  19, 18, 32, 17, 33, 16, 7, 34, 8, 24, 6, 9, 25, 5, 35, 10, 26, 4, 11, 27, 3, 36, 12, 28, 2, 13, 29, 37, 1, 14, 30, 0, 15, 31, 38, 20, 21, 39, 22, 23
+//  19, 32, 18, 17, 33, 16, 7, 34, 8, 24, 6, 9, 25, 5, 35, 10, 26, 4, 11, 27, 3, 36, 12, 28, 2, 13, 29, 37, 1, 14, 30, 0, 15, 31, 38, 20, 21, 39, 22, 23
+  40, 41, 42, 43, 44, 45, 46, 47, 19, 32, 18, 17, 33, 16, 7, 34, 8, 24, 6, 9, 25, 5, 35, 10, 26, 4, 11, 27, 3, 36, 12, 28, 2, 13, 29, 37, 1, 14, 30, 0, 15, 31, 38, 20, 21, 39, 22, 23
 };
+
+bool channelFavs[48];
+uint8_t numberOfFavs = 0;
 
 char channel = 0;
 uint8_t channelIndex = 0;
 //uint8_t rssi = 0;
-uint8_t rssi_scaled = 0;
+//uint8_t rssi_scaled = 0;
 uint8_t active_receiver = useReceiverA;
 #ifdef USE_DIVERSITY
     uint8_t diversity_mode = useReceiverAuto;
     char diversity_check_count = 0; // used to decide when to change antennas.
 #endif
 uint8_t rssi_seek_threshold = RSSI_SEEK_TRESHOLD;
-uint8_t hight = 0;
+//uint8_t hight = 0;
 uint8_t state = START_STATE;
 uint8_t state_last_used=START_STATE;
 //uint8_t writePos = 0;
@@ -141,7 +169,6 @@ int rssi=0;
 int rssiA=0;
 int rssiB=0;
 
-char call_sign[10];
 bool settings_beeps = true;
 bool settings_orderby_channel = true;
 
@@ -176,7 +203,7 @@ void setup()
     // SPI pins for RX control
     pinMode (slaveSelectPin, OUTPUT);
     pinMode (spiDataPin, OUTPUT);
-	pinMode (spiClockPin, OUTPUT);
+    pinMode (spiClockPin, OUTPUT);
 
     // use values only of EEprom is not 255 = unsaved
     uint8_t eeprom_check = EEPROM.read(EEPROM_ADR_STATE);
@@ -194,16 +221,10 @@ void setup()
         EEPROM.write(EEPROM_ADR_RSSI_MAX_A_L,lowByte(RSSI_MAX_VAL));
         EEPROM.write(EEPROM_ADR_RSSI_MAX_A_H,highByte(RSSI_MAX_VAL));
 
-        // save default call sign
-        strcpy(call_sign, CALL_SIGN); // load callsign
-        for(uint8_t i = 0;i<sizeof(call_sign);i++) {
-            EEPROM.write(EEPROM_ADR_CALLSIGN+i,call_sign[i]);
+        for(int i=0; i<6;i++){
+            EEPROM.write(EEPROM_ADR_FAVS+i,B00000000);
         }
 
-
-
-//#ifdef USE_DIVERSITY
-        // diversity
         EEPROM.write(EEPROM_ADR_DIVERSITY,diversity_mode);
         // save 16 bit
         EEPROM.write(EEPROM_ADR_RSSI_MIN_B_L,lowByte(RSSI_MIN_VAL));
@@ -211,7 +232,6 @@ void setup()
         // save 16 bit
         EEPROM.write(EEPROM_ADR_RSSI_MAX_B_L,lowByte(RSSI_MAX_VAL));
         EEPROM.write(EEPROM_ADR_RSSI_MAX_B_H,highByte(RSSI_MAX_VAL));
-//#endif
     }
 
     // read last setting from eeprom
@@ -226,9 +246,15 @@ void setup()
     settings_beeps=EEPROM.read(EEPROM_ADR_BEEP);
     settings_orderby_channel=EEPROM.read(EEPROM_ADR_ORDERBY);
 
-    // load saved call sign
-    for(uint8_t i = 0;i<sizeof(call_sign);i++) {
-        call_sign[i] = EEPROM.read(EEPROM_ADR_CALLSIGN+i);
+    for(int j=0; j<6; j++){
+        uint8_t FavsY = EEPROM.read(EEPROM_ADR_FAVS+j);
+        for(int i=0; i<8; i++){
+            channelFavs[j*8+i] = ((FavsY & B10000000) == B10000000);
+            if((FavsY & B10000000) == B10000000){
+                numberOfFavs++;
+            }
+            FavsY = FavsY << 1;
+        }
     }
 
     rssi_min_a=((EEPROM.read(EEPROM_ADR_RSSI_MIN_A_H)<<8) | (EEPROM.read(EEPROM_ADR_RSSI_MIN_A_L)));
@@ -241,7 +267,7 @@ void setup()
     in_menu_time_out=0;
 
     // Init Display
-    if (drawScreen.begin(call_sign) > 0) {
+    if (drawScreen.begin() > 0) {
         // on Error flicker LED
         while (true) { // stay in ERROR for ever
             digitalWrite(led, !digitalRead(led));
@@ -260,6 +286,13 @@ void loop(){
     /*******************/
     uint8_t in_menu;
 
+  //  if(state = STATE_MAIN_MENU){
+
+        
+  //  }
+
+
+
     if (digitalRead(buttonMode) == LOW){ // key pressed ? Jelle: (LOW=PRESSED)
         time_screen_saver=0; // Jelle: =?
         //Jelle: 2 beeps is gemakkelijk, weet je dat je de knop hebt ingedrukt
@@ -269,8 +302,8 @@ void loop(){
         delay(KEY_DEBOUNCE/2); // debounce
         uint8_t press_time=0; //10presses = save
         // on entry wait for release
-        while(digitalRead(buttonMode) == LOW && press_time < 10){
-            delay(100);
+        while(digitalRead(buttonMode) == LOW && press_time < 30){
+            delay(10);
             press_time++;
         }
 
@@ -283,14 +316,15 @@ void loop(){
         char menu_id=state_last_used;
         in_menu_time_out=50; // 20x 100ms = 5 seconds
         do{
-            if(press_time == 10) // if menu held for 1 second invoke quick save.
+            if(press_time == 30) // if menu held for 1 second invoke quick save.
             {
                 // user held the mode button and wants to quick save.
+                delay(100);
                 in_menu_time_out=0; // EXIT
-                state = STATE_SAVE;
+                state = STATE_QUICK_MENU;
                 break;
             }
-            drawScreen.mainMenu(menu_id);
+            drawScreen.modeMenu(menu_id);
             delay(KEY_DEBOUNCE);
             while(--in_menu_time_out && (digitalRead(buttonMode) == HIGH) && (digitalRead(buttonUp) == HIGH) && (digitalRead(buttonDown) == HIGH)){
                 delay(100); // timeout delay // wait for next key press or time out                
@@ -301,35 +335,42 @@ void loop(){
                     beep(50);
                     delay(KEY_DEBOUNCE/2);
                 }else{ 
-                    switch(menu_id){ //Should be state=menu_id in final version
+                    /*switch(menu_id){ //Should be state=menu_id in final version
                         case 0:
                             state=STATE_MANUAL;
                             break;
                         case 1:
-                            state=STATE_SEEK;
+                            state=STATE_FAVORITES;
                             break;
                         case 2:
-                            state=STATE_SCAN;
+                            state=STATE_SEEK;
                             break;
                         case 3:
-                            state=STATE_ANTENNA;
+                            state=STATE_SCAN;
                             break;
                         case 4:
-                            state=STATE_DIVERSITY;
+                            state=STATE_ANTENNA;
                             break;
                         case 5:
+                            state=STATE_DIVERSITY;
+                            break;
+                        case 6:
                             state=STATE_SETUP_MENU;
                             break;
-                    }
+                        case 7:
+                            state=STATE_SETUP_MENU;
+                            break;
+                    }*/
+                    state=menu_id;
                     beep(50);
                     delay(KEY_DEBOUNCE/2);
                     in_menu_time_out=0;
                 }
             }else{
                 if(digitalRead(buttonUp) == LOW) {
-                	menu_id = (menu_id+5)%6;
+                	menu_id = (menu_id+5-1)%5;
                 }else if(digitalRead(buttonDown) == LOW) {
-                	menu_id = (menu_id+1)%6;
+                	menu_id = (menu_id+1)%5;
                 }
                 in_menu_time_out=50;
 			}
@@ -344,6 +385,18 @@ void loop(){
     if(in_menu_time_out==0){
 //        beep(300); //temp to see if it works
         switch(state){
+            case STATE_FAVORITES:
+                if(numberOfFavs==0){
+                    state=STATE_MANUAL;
+                }
+                if(channelFavs[channelIndex]==false){
+                    for(int i=0; i<48; i++){
+                        channelIndex=(channelIndex+1)%48;
+                        if(channelFavs[channelIndex]==true){
+                            break;
+                        }
+                    }
+                }    
             case STATE_MANUAL:
             case STATE_ANTENNA:
                 time_screen_saver=millis();
@@ -377,7 +430,7 @@ void loop(){
     /*   Processing depending of state   **   SCREEN SAVER   */
     /*********************************************************/
     if(state == STATE_SCREEN_SAVER) {
-        drawScreen.screenSaver(diversity_mode, pgm_read_byte_near(channelNames + channelIndex), pgm_read_word_near(channelFreqTable + channelIndex), call_sign);
+        drawScreen.screenSaver(diversity_mode, channelIndex, pgm_read_word_near(channelFreqTable + channelIndex));
         do{
             readRSSI();
             drawScreen.updateScreenSaver(active_receiver, rssiA, rssiB);
@@ -395,7 +448,7 @@ void loop(){
     /*   Personal addapted screen for antenna compare   */
     /****************************************************/
     if(state == STATE_ANTENNA_SAVER) {
-        drawScreen.screenAntenna(diversity_mode, pgm_read_byte_near(channelNames + channelIndex), pgm_read_word_near(channelFreqTable + channelIndex), call_sign);
+        drawScreen.screenAntenna(diversity_mode, channelIndex, pgm_read_word_near(channelFreqTable + channelIndex));
         do{
             readRSSI();
             drawScreen.updateScreenAntenna(active_receiver, rssiA, rssiB);
@@ -414,7 +467,7 @@ void loop(){
     if(state == STATE_DIVERSITY) {
         // simple menu
         char diversity_mode_previous=diversity_mode;
-		in_menu_time_out=50;
+		    in_menu_time_out=50;
         do{
             drawScreen.diversity(diversity_mode);
             readRSSI();
@@ -428,6 +481,7 @@ void loop(){
                 if(in_menu_time_out==0){
                     diversity_mode = diversity_mode_previous;
                 }
+                EEPROM.write(EEPROM_ADR_DIVERSITY,diversity_mode);
                 beep(50);
                 delay(KEY_DEBOUNCE/2);
                 in_menu_time_out=0;
@@ -446,27 +500,39 @@ void loop(){
     }
 
     /*****************************************/
-    /*   Processing MANUAL MODE / SEEK MODE / ANTENNA MODE */
+    /*   Processing MANUAL MODE / SEEK MODE / ANTENNA MODE / FAVORITES MODE */
     /*****************************************/
-    if(state == STATE_MANUAL || state == STATE_SEEK || state==STATE_ANTENNA)
+    if(state == STATE_MANUAL || state == STATE_SEEK || state==STATE_ANTENNA || state==STATE_FAVORITES)
     {
         // read rssi
         wait_rssi_ready();
         readRSSI();
-        rssi_best = (rssi > rssi_best) ? rssi : rssi_best;
+//        rssi_best = (rssi > rssi_best) ? rssi : rssi_best;
 //channel -> order by Ghz freq
 //channelIndex -> Order by name F1 channel
-        drawScreen.updateSeekMode(state, channelIndex, channel, rssi, pgm_read_word_near(channelFreqTable + channelIndex), rssi_seek_threshold, seek_found);
-    //    channel=channel_from_index(channelIndex); // get 0...40 index depending of current channel
+        drawScreen.updateSeekMode(state, channelIndex, channel, rssi, pgm_read_word_near(channelFreqTable + channelIndex), rssi_seek_threshold, seek_found, channelFavs);
+    //    channel=channel_from_index(channelIndex); // get 0...48 index depending of current channel
         if(state == STATE_MANUAL || state == STATE_ANTENNA) // MANUAL MODE
         {
             // handling of keys
             if( digitalRead(buttonUp) == LOW){        // channel UP
                 if(settings_orderby_channel){ //order by channel
-                    channelIndex=(channelIndex+1)%40;
-                    channel = channel_from_index(channelIndex);
+                    uint8_t press_time=0; //3presses = save
+                    // on entry wait for release
+                    while(digitalRead(buttonUp) == LOW && press_time < 30){
+                        delay(10);
+                        press_time++;
+                    }
+                    if(press_time==30){
+                        channelIndex=(channelIndex/8*8+8)%48;
+                        channel = channel_from_index(channelIndex);
+                    }else{
+                        channelIndex=(channelIndex+1)%48;
+                        channel = channel_from_index(channelIndex);
+                    }
+
                 }else{ //order by frequency
-                    channel=(channel+1)%40;
+                    channel=(channel+1)%48;
                     channelIndex = pgm_read_byte_near(channelList + channel);
                 }
             beep(50); // beep & debounce
@@ -474,12 +540,49 @@ void loop(){
             time_screen_saver=millis();
             }else if( digitalRead(buttonDown) == LOW){ // channel DOWN
                 if(settings_orderby_channel){ //order by channel
-                    channelIndex=(channelIndex+39)%40;
-                    channel = channel_from_index(channelIndex);
+                    uint8_t press_time=0; //3presses = save
+                    // on entry wait for release
+                    while(digitalRead(buttonDown) == LOW && press_time < 30){
+                        delay(10);
+                        press_time++;
+                    }
+                    if(press_time==30){
+                        channelIndex=(channelIndex/8*8+47)%48;
+                        channel = channel_from_index(channelIndex);
+                    }else{
+                        channelIndex=(channelIndex+48-1)%48;
+                        channel = channel_from_index(channelIndex);
+                    }
                 }else{ //order by frequency
-                    channel=(channel+39)%40;
+                    channel=(channel+48-1)%48;
                     channelIndex = pgm_read_byte_near(channelList + channel);
                 }
+            beep(50); // beep & debounce
+            delay(KEY_DEBOUNCE); // debounce
+            time_screen_saver=millis();
+            }
+        }
+
+        if(state == STATE_FAVORITES){
+            if( digitalRead(buttonUp) == LOW){        // channel UP
+                for(int i=0; i<48; i++){
+                    channelIndex=(channelIndex+1)%48;
+                    if(channelFavs[channelIndex]==true){
+                        break;
+                    }
+                }
+                channel = channel_from_index(channelIndex);
+            beep(50); // beep & debounce
+            delay(KEY_DEBOUNCE); // debounce
+            time_screen_saver=millis();
+            }else if( digitalRead(buttonDown) == LOW){ // channel DOWN
+                for(int i=0; i<48; i++){
+                    channelIndex=(channelIndex+47)%48;
+                    if(channelFavs[channelIndex]==true){
+                        break;
+                    }
+                }
+                channel = channel_from_index(channelIndex);
             beep(50); // beep & debounce
             delay(KEY_DEBOUNCE); // debounce
             time_screen_saver=millis();
@@ -567,7 +670,7 @@ void loop(){
             }
         }
 
-        uint8_t bestChannelName = pgm_read_byte_near(channelNames + channelIndex);
+        uint8_t bestChannelName = channelIndex;
         uint16_t bestChannelFrequency = pgm_read_word_near(channelFreqTable + channelIndex);
 
         drawScreen.updateBandScanMode((state == STATE_RSSI_SETUP), channel, rssi, bestChannelName, bestChannelFrequency, rssi_setup_min_a, rssi_setup_max_a);
@@ -596,7 +699,7 @@ void loop(){
                         rssi_max_b = RSSI_MAX_VAL;
                     }
 
-                    state=STATE_RSSI;
+                    state=STATE_RSSI_MENU;
                     beep(1000);
                 }
             }
@@ -623,7 +726,11 @@ void loop(){
         in_menu_time_out=50;
         int editing = -1;
         do{
-            drawScreen.SetupMenu(menu_id, settings_beeps, settings_orderby_channel, call_sign, editing);
+            //drawScreen.mainMenu(menu_id, s0, s0size, 5);
+            drawScreen.setupMenu(menu_id, settings_beeps, settings_orderby_channel);
+
+             
+            //drawScreen.setupMenu(menu_id, settings_beeps, settings_orderby_channel, editing);
             delay(KEY_DEBOUNCE);
             while(--in_menu_time_out && (digitalRead(buttonMode) == HIGH) && (digitalRead(buttonUp) == HIGH) && (digitalRead(buttonDown) == HIGH)){
                 delay(100); // timeout delay // wait for next key press or time out                
@@ -638,17 +745,18 @@ void loop(){
                         case 0: // Channel Order Channel/Frequency
                             settings_orderby_channel = !settings_orderby_channel;
                             in_menu_time_out=50;
+                            EEPROM.write(EEPROM_ADR_ORDERBY,settings_orderby_channel);
                             break;
                         case 1:// Beeps enable/disable
                             settings_beeps = !settings_beeps;
+                            EEPROM.write(EEPROM_ADR_BEEP,settings_beeps);
                             in_menu_time_out=50;
                             break;
-                        case 2:
-                            editing++;
-                            if(editing>9) {
-                                editing=-1;
-                            }
-                            in_menu_time_out=50;
+                        case 2:// settings RSSI
+                            in_menu_time_out = 0;
+                            state=STATE_RSSI_MENU;
+                            beep(50);
+				            delay(KEY_DEBOUNCE/2);
                             break;
                         case 3://  Calibrate RSSI
                             in_menu_time_out = 0;
@@ -669,40 +777,20 @@ void loop(){
                             rssi_best=0;
                             scan_start=1;
                             drawScreen.bandScanMode(state);
-
-                            
                             beep(50);
                             delay(KEY_DEBOUNCE/2);
                             break;
-                        case 4:// settings RSSI
-                            in_menu_time_out = 0;
-                            state=STATE_RSSI;
-                            beep(50);
-				            delay(KEY_DEBOUNCE/2);
-                            break;
-                        case 5:
-                            in_menu_time_out = 0; // save & exit menu
-                            state=STATE_SAVE;
-                            beep(50);
-                            delay(KEY_DEBOUNCE/2);
+                        case 4:
+                            in_menu_time_out=0;
+                            state = state_last_used;
                             break;
                     }
                 }
             }else{
                 if(digitalRead(buttonUp) == LOW) {
-                    if(editing == -1){
-                	   menu_id = (menu_id+5)%6;
-                    }else{
-                        call_sign[editing]++;
-                        call_sign[editing] > '}' ? call_sign[editing] = ' ' : false; // loop to oter end
-                    }
-                }else if(digitalRead(buttonDown) == LOW) {
-                    if(editing == -1){
-                        menu_id = (menu_id+1)%6;
-                    }else{
-                        call_sign[editing]--;
-                        call_sign[editing] < ' ' ? call_sign[editing] = '}' : false; // loop to oter end
-                    }
+                	   menu_id = (menu_id+4)%5;
+               }else if(digitalRead(buttonDown) == LOW) {
+                        menu_id = (menu_id+1)%5;
                 }
 			    in_menu_time_out=50;
             }
@@ -711,35 +799,77 @@ void loop(){
         delay(KEY_DEBOUNCE/2);
     }
 
-    /************JELLE OK********/
-    /*   Processing SAVE        */
+    /******************JELLE OK**/
+    /*   Processing QUICK  */
     /****************************/
-    if(state == STATE_SAVE){
-        EEPROM.write(EEPROM_ADR_TUNE,channelIndex);
-        EEPROM.write(EEPROM_ADR_STATE,state_last_used);
-        EEPROM.write(EEPROM_ADR_BEEP,settings_beeps);
-        EEPROM.write(EEPROM_ADR_ORDERBY,settings_orderby_channel);
-        // save call sign
-        for(uint8_t i = 0;i<sizeof(call_sign);i++) {
-            EEPROM.write(EEPROM_ADR_CALLSIGN+i,call_sign[i]);
-        }
-        EEPROM.write(EEPROM_ADR_DIVERSITY,diversity_mode);
-        drawScreen.save(state_last_used, channelIndex, pgm_read_word_near(channelFreqTable + channelIndex), call_sign);
-        for (uint8_t loop=0;loop<5;loop++)
-        {
-            beep(100); // beep
-            delay(100);
-        }
-        delay(3000);
-        in_menu_time_out=0;
-        state=state_last_used; // return to saved function
-     // force_menu_redraw=1; // we change the state twice, must force redraw of menu
-
-
-        
+    if(state == STATE_QUICK_MENU){
+        // simple menu
+        char menu_id=0;
+        in_menu_time_out=50;
+//        int editing = -1;
+        do{
+            drawScreen.quickMenu(menu_id);
+            delay(KEY_DEBOUNCE);
+            while(--in_menu_time_out && (digitalRead(buttonMode) == HIGH) && (digitalRead(buttonUp) == HIGH) && (digitalRead(buttonDown) == HIGH)){
+                delay(100); // timeout delay // wait for next key press or time out                
+            }
+            if(in_menu_time_out==0 || digitalRead(buttonMode) == LOW){
+                if(in_menu_time_out==0){
+                    state = state_last_used;
+                    beep(50);
+                    delay(KEY_DEBOUNCE/2);
+                }else{
+                    uint8_t FavsZ = B00000000;
+                    switch(menu_id){
+                        case 0: // Fastbood here
+                            EEPROM.write(EEPROM_ADR_TUNE,channelIndex);
+                            EEPROM.write(EEPROM_ADR_STATE,state_last_used);
+                            state=state_last_used;
+                            in_menu_time_out=0;
+                            break;
+                        case 1:// add to favorite
+                            channelFavs[channelIndex]=true;
+                            numberOfFavs++;
+                        case 2://  remove from favorite
+                            if(menu_id==2){
+                                channelFavs[channelIndex]=false;
+                                numberOfFavs--;
+                                if(EEPROM.read(EEPROM_ADR_TUNE)==channelIndex&&EEPROM.read(EEPROM_ADR_STATE)==STATE_FAVORITES){
+                                    EEPROM.write(EEPROM_ADR_STATE,STATE_MANUAL);
+                                }
+                            }
+                            for(int i=channelIndex/8*8; i<channelIndex/8*8+8;i++){
+                                FavsZ = FavsZ<<1;
+                                FavsZ += channelFavs[i];
+                            }
+                            EEPROM.write(EEPROM_ADR_FAVS+channelIndex/8,FavsZ);
+                            state=state_last_used;
+                            in_menu_time_out=0;
+                            break;
+                        case 3:// diversity menu
+                            state=STATE_DIVERSITY;
+                            in_menu_time_out=0;
+                            break;
+                        case 4://settings menu
+                            state=STATE_SETUP_MENU;
+                            in_menu_time_out=0;
+                            break;
+                    }
+                    beep(50);
+                    delay(KEY_DEBOUNCE/2);
+                }
+            }else{
+                if(digitalRead(buttonUp) == LOW) {
+                	   menu_id = (menu_id+4)%5;
+                }else if(digitalRead(buttonDown) == LOW) {
+                        menu_id = (menu_id+1)%5;
+                }
+			    in_menu_time_out=50;
+            }
+            beep(50); // beep & debounce
+        }while(in_menu_time_out);
+        delay(KEY_DEBOUNCE/2);
     }
-
-
 
 
 
@@ -747,12 +877,18 @@ void loop(){
     /****************JELLE OK****/
     /*   Processing SETUP RSSI  */
     /****************************/
-    if(state == STATE_RSSI){
+    if(state == STATE_RSSI_MENU){
         char menu_id=0;
         in_menu_time_out=50;
-        int editing = -1;
+        bool editing = false;
         do{
-            drawScreen.rssiMenu(rssi_min_a, rssi_max_a, rssi_min_b, rssi_max_b, menu_id, editing);
+            drawScreen.rssiMenu(menu_id, rssi_min_a, rssi_max_a, rssi_min_b, rssi_max_b, editing);
+
+            
+            
+            //drawScreen.mainMenu(menu_id, o0, o0size, 5);
+            //bool tempolar = false;
+            //drawScreen.overlayRSSI(menu_id, o0size,5, rssi_min_a, rssi_max_a, rssi_min_b, rssi_max_b, tempolar);
             delay(KEY_DEBOUNCE);
             while(--in_menu_time_out && (digitalRead(buttonMode) == HIGH) && (digitalRead(buttonUp) == HIGH) && (digitalRead(buttonDown) == HIGH)){
                 delay(100); // timeout delay
@@ -763,10 +899,10 @@ void loop(){
                     beep(50);
                     delay(KEY_DEBOUNCE/2);
                 }else{
-                    if(editing!=-1){
-                        editing=-1;
+                    if(editing){
+                        editing=false;
                     }else if(menu_id<4){
-                        editing=menu_id;
+                        editing=true;
                     }else if(menu_id==4){
                         in_menu_time_out=0;
                         rssi_min_a=((EEPROM.read(EEPROM_ADR_RSSI_MIN_A_H)<<8) | (EEPROM.read(EEPROM_ADR_RSSI_MIN_A_L)));
@@ -791,47 +927,49 @@ void loop(){
                         // save 16 bit
                         EEPROM.write(EEPROM_ADR_RSSI_MAX_B_L,(rssi_max_b & 0xff));
                         EEPROM.write(EEPROM_ADR_RSSI_MAX_B_H,(rssi_max_b >> 8));
-                        state=STATE_SAVE;
+                        state=STATE_SETUP_MENU;
                         beep(50);
                         delay(KEY_DEBOUNCE/2);
                     }
                 }
             }else{
                 if(digitalRead(buttonUp) == LOW) {
-                    switch(editing){
-                        case -1:
-                            menu_id = (menu_id+5)%6;
-                            break;
-                        case 0:
-                            rssi_min_a++;
-                            break;
-                        case 1:
-                            rssi_max_a++;
-                            break;
-                        case 2:
-                            rssi_min_b++;
-                            break;
-                        case 3:
-                            rssi_max_b++;
-                            break;
+                    if(editing){
+                        switch(menu_id){
+                            case 0:
+                                rssi_min_a++;
+                                break;
+                            case 1:
+                                rssi_max_a++;
+                                break;
+                            case 2:
+                                rssi_min_b++;
+                                break;
+                            case 3:
+                                rssi_max_b++;
+                                break;
+                        }
+                    }else{
+                        menu_id = (menu_id+5)%6;
                     }
                 }else if(digitalRead(buttonDown) == LOW) {
-                    switch(editing){
-                        case -1:
-                            menu_id = (menu_id+1)%6;
-                            break;
-                        case 0:
-                            rssi_min_a--;
-                            break;
-                        case 1:
-                            rssi_max_a--;
-                            break;
-                        case 2:
-                            rssi_min_b--;
-                            break;
-                        case 3:
-                            rssi_max_b--;
-                            break;
+                    if(editing){
+                        switch(menu_id){
+                            case 0:
+                                rssi_min_a--;
+                                break;
+                            case 1:
+                                rssi_max_a--;
+                                break;
+                            case 2:
+                                rssi_min_b--;
+                                break;
+                            case 3:
+                                rssi_max_b--;
+                                break;
+                        }
+                    }else{
+                        menu_id = (menu_id+1)%6;
                     }
                 }
 				in_menu_time_out=50;
@@ -858,17 +996,6 @@ void loop(){
         last_channel_index=channelIndex;
         // keep time of tune to make sure that RSSI is stable when required
         time_of_tune=millis();
-        // give 3 beeps when tuned to give feedback of correct start
-/*        if(first_tune)
-        {
-            first_tune=0;
-            #define UP_BEEP 100
-            beep(UP_BEEP);
-            delay(UP_BEEP);
-            beep(UP_BEEP);
-            delay(UP_BEEP);
-            beep(UP_BEEP);
-        }*/
     }
 }
 
@@ -901,6 +1028,21 @@ uint8_t channel_from_index(uint8_t channelIndex)
     }
     return (channel);
 }
+
+/*uint8_t favchannel_from_index(uint8_t channelIndex)
+{
+    uint8_t loop=0;
+    uint8_t channel=0;
+    for (loop=0;loop<=numberOfFavs;loop++)
+    {
+        if(channelFavs[loop] == channelIndex)
+        {
+            channel=loop;
+            break;
+        }
+    }
+    return (channel);
+}*/
 
 void wait_rssi_ready()
 {
